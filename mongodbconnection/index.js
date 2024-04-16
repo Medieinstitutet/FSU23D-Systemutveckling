@@ -1,24 +1,35 @@
 console.log("index.js");
 
 let mongodb = require("mongodb");
+let express = require("express");
 
-let url = 'mongodb://localhost:27017';
-let client = new mongodb.MongoClient(url);
+let app = express();
 
-client.connect().then(() => {
-    console.log("connected");
+app.get("/", (request, response) => {
+    
+    let url = 'mongodb://localhost:27017';
+    let client = new mongodb.MongoClient(url);
 
-    let db = client.db('test');
-    let collection = db.collection('test');
+    client.connect().then(() => {
+        console.log("connected");
 
-    return collection.insertMany([{a: 1}, {a: 2}, {a: 3, name: "Test product", price: 123}]).then(() => {
-        console.log("inserted");
+        let db = client.db('shop');
+        let collection = db.collection('product');
 
-        return collection.find({name: "Test product"}).toArray().then((results) => {
-            console.log("Found", results);
-        })
-    });
+        
 
-}).finally(() => {
-    client.close();
-})
+            return collection.find({}).toArray().then((results) => {
+                console.log("Found", results);
+                response.json(results);
+            });
+
+    }).finally(() => {
+        client.close();
+    })
+});
+
+app.listen(3000);
+
+/*
+
+*/
