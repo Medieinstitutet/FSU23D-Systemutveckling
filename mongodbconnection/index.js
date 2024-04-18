@@ -14,7 +14,7 @@ app.get("/", (request, response) => {
         console.log("connected");
 
         let db = client.db('shop');
-        let collection = db.collection('product');
+        let collection = db.collection('orders');
 
         
 
