@@ -1,107 +1,167 @@
-let mongodb = require("mongodb");
+const mongodb = require("mongodb");
+
 let instance = null;
 
 class DatabaseConnection {
-
     constructor() {
-        console.log("DatabaseConnection::constructor");
-
-        this.client = null;
         this.url = null;
-
-        this.debugId = Math.floor(Math.random()*1000000000);
-
     }
 
     setUrl(url) {
         this.url = url;
-
-        
     }
 
     async connect() {
-        if(!this.client) {
-            this.client = new mongodb.MongoClient(this.url);
-
-            await this.client.connect();
+        if(this.client) {
+            return;
         }
+        this.client = new mongodb.MongoClient(this.url);
+
+        await this.client.connect();
+    }
+
+    async saveOrder(lineItems, customer) {
+
+        await this.connect();
+
+        let db = this.client.db("shop");
+        let collection = db.collection("orders");
+
+        let result = await collection.insertOne({"customer": customer, "orderDate": new Date(), "status": "unpaid", "totalPrice": 0, "paymentId": null}); //METODO: calculate total price
+
+        let orderId = result.insertedId;
+        let encodedLineItems = lineItems.map((lineItem) => {
+            return {
+                "amount": lineItem["amount"],
+                "totalPrice": 0 /* METODO: calculate */,
+                "order": new mongodb.ObjectId(orderId),
+                "product": new mongodb.ObjectId(lineItem["product"]),
+            }
+        })
+        
+        let lineItemsCollection = db.collection("lineItems");
+        await lineItemsCollection.insertMany(encodedLineItems)
+
+        return result.insertedId;
+    }
+
+    async createProduct() {
+        await this.connect();
+
+        let db = this.client.db("shop");
+        let collection = db.collection("products");
+
+        let result = await collection.insertOne({"status": "draft", "name": null, "description": null, "image": null, "amountInStock": 0, "price": 0, "category": null});
+
+        return result.insertedId;
+    }
+
+    async updateProduct(id, productData) {
+        await this.connect();
+
+        let db = this.client.db("shop");
+        let collection = db.collection("products");
+
+        await collection.updateOne({"_id": new mongodb.ObjectId(id)}, {"$set": {
+            "name": productData["name"],
+            "description": productData["description"],
+            "amountInStock": productData["amountInStock"],
+            "price": productData["price"],
+            "category": productData["category"] ? new mongodb.ObjectId(productData["category"]) : null
+        }});
+    }
+
+    async getProducts() {
+        await this.connect();
+
+        let db = this.client.db("shop");
+        let collection = db.collection("products");
+
+        let pipeline = [
+            {
+              $lookup: {
+                from: "categories",
+                localField: "category",
+                foreignField: "_id",
+                as: "category",
+              },
+            },
+            {
+              $addFields: {
+                category: {
+                  $first: "$category",
+                },
+              },
+            },
+          ];
+
+        let documents = collection.aggregate(pipeline);
+        let returnArray = [];
+
+        for await(let document of documents) {
+            returnArray.push(document);
+        }
+
+        return returnArray;
     }
 
     async getAllOrders() {
         await this.connect();
 
-        let db = this.client.db('shop');
-        let collection = db.collection('orders');
+        let db = this.client.db("shop");
+        let collection = db.collection("orders");
 
         let pipeline = [
             {
-            $lookup: {
+              $lookup: {
                 from: "lineItems",
-                localField: "order",
-                foreignField: "id",
+                localField: "_id",
+                foreignField: "order",
                 as: "lineItems",
                 pipeline: [
-                {
+                  {
                     $lookup: {
-                    from: "products",
-                    localField: "id",
-                    foreignField: "product",
-                    as: "linkedProduct",
+                      from: "products",
+                      localField: "product",
+                      foreignField: "_id",
+                      as: "product",
                     },
-                },
-                {
+                  },
+                  {
                     $addFields: {
-                    linkedProduct: {
-                        $first: "$linkedProduct",
+                      product: {
+                        $first: "$product",
+                      },
                     },
-                    },
-                },
+                  },
                 ],
-            },
+              },
             },
             {
-            $lookup:
-                {
+              $lookup: {
                 from: "customers",
-                localField: "id",
-                foreignField: "customer",
-                as: "linkedCustomer",
-                },
+                localField: "customer",
+                foreignField: "_id",
+                as: "customer",
+              },
             },
             {
-            $addFields:
-                {
-                linkedCustomer: {
-                    $first: "$linkedCustomer",
+              $addFields: {
+                linkedCustmer: {
+                  $first: "$customer",
                 },
-                calculatedTotal: {
-                    $sum: "$lineItems.totalPrice",
-                },
-                },
+              },
             },
-        ]
+          ];
 
-        let aggregate = collection.aggregate(pipeline);
+        let documents = collection.aggregate(pipeline);
+        let returnArray = [];
 
-        let orders = [];
-
-        for await (let document of aggregate) {
-            orders.push(document);
+        for await(let document of documents) {
+            returnArray.push(document);
         }
 
-        return orders;
-    }
-
-    async getOrCreateCustomer(email, name, address) {
-        //METODO
-
-        return {"id": 12345657};
-    }
-
-    async createOrder(lineItems, customer) {
-        //METODO
-
-        return {"id": "order12345667"};
+        return returnArray;
     }
 
     static getInstance() {
