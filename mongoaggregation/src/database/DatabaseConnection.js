@@ -71,6 +71,15 @@ class DatabaseConnection {
         }});
     }
 
+    async save(aCollection, aId, aData) {
+      await this.connect();
+
+      let db = this.client.db("shop");
+      let collection = db.collection(aCollection);
+
+      await collection.updateOne({"_id": aId}, {"$set": aData});
+    }
+
     async getProducts() {
         await this.connect();
 
