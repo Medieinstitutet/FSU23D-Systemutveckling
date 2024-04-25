@@ -20,9 +20,16 @@ class DatabaseObject {
         return {};
     }
 
-    save() {
+    async save() {
         let data = this.getSaveData();
-        DatabaseConnection.getInstance().save(this.collection, this.id, data);
+
+        if(!this.id) {
+            this.id = DatabaseConnection.getInstance().create(this.collection, data); //METODO: create
+        }
+        else {
+            DatabaseConnection.getInstance().save(this.collection, this.id, data);
+        }
+        
     }
 }
 
