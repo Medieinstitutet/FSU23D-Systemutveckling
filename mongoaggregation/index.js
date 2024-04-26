@@ -56,4 +56,21 @@ app.post("/products/:id", async (request, response) => {
 
 });
 
+app.get("/active-products", async (request, response) => {
+    let products = await DatabaseConnection.getInstance().getActiveProducts();
+
+    response.json(products);
+});
+
+app.post("/complete-order/:id", async (request, response) => {
+    
+    //METODO: check that payment is done
+    let isPayed = true; //MEDEBUG: always true
+    if(isPayed) {
+        await DatabaseConnection.getInstance().setOrderAsPayed(request.params.id);
+    }
+
+    response.json({"payed": isPayed});
+})
+
 app.listen(3000);
