@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "nodemon index.js",
     "test": "node test.js",
-    "test-product": "node test-product.js"
+    "test-product": "node test-product.js",
+    "test-order": "node test-order.js"
   },
   "author": "",
   "license": "ISC",

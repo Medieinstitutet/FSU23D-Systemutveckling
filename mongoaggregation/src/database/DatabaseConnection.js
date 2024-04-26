@@ -72,12 +72,29 @@ class DatabaseConnection {
     }
 
     async save(aCollection, aId, aData) {
+      //console.log("save");
       await this.connect();
 
       let db = this.client.db("shop");
       let collection = db.collection(aCollection);
 
+      if(!aId) {
+        let result = await collection.insertOne(aData);
+        return result.insertedId;
+      }
+
       await collection.updateOne({"_id": aId}, {"$set": aData});
+      return aId;
+    }
+
+    async getDocument(aCollection, aId) {
+      await this.connect();
+
+      let db = this.client.db("shop");
+      let collection = db.collection(aCollection);
+
+      let results = await collection.find({"_id": aId}).toArray();
+      return results[0];
     }
 
     async getProducts() {

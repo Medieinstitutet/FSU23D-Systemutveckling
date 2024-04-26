@@ -20,9 +20,30 @@ class DatabaseObject {
         return {};
     }
 
-    save() {
+    async save() {
+        console.log("DatabaseObject::save");
         let data = this.getSaveData();
-        DatabaseConnection.getInstance().save(this.collection, this.id, data);
+        this.id = await DatabaseConnection.getInstance().save(this.collection, this.id, data);
+    }
+
+    async ensureHasId() {
+        if(!this.id) {
+            this.id = await DatabaseConnection.getInstance().save(this.collection, this.id, {});
+        }
+    }
+
+    async getDatabaseData() {
+        return await DatabaseConnection.getInstance().getDocument(this.collection, this.id);
+    }
+
+    getObjectId(id) {
+        if(!id) {
+            return null;
+        }
+        if(id instanceof mongodb.ObjectId) {
+            return id;
+        }
+        return new mongodb.ObjectId(id);
     }
 }
 

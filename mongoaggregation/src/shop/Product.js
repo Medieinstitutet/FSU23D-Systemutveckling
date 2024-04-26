@@ -19,6 +19,17 @@ class Product extends DatabaseObject {
         this._name = value;
     }
 
+    getPrice() {
+        return this.price;
+    }
+
+    async setupFromDatabase() {
+        let databaseData = await this.getDatabaseData();
+
+        this._name = databaseData["name"];
+        this.price = databaseData["price"];
+    }
+
     getSaveData() {
         let data = {"name": this._name, "description": ""};
         
