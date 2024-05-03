@@ -56,19 +56,29 @@ class DatabaseConnection {
         return result.insertedId;
     }
 
-    async updateProduct(id, productData) {
+    async updateProduct(id, request) {
+
         await this.connect();
 
         let db = this.client.db("shop");
         let collection = db.collection("products");
 
-        await collection.updateOne({"_id": new mongodb.ObjectId(id)}, {"$set": {
-            "name": productData["name"],
-            "description": productData["description"],
-            "amountInStock": productData["amountInStock"],
-            "price": productData["price"],
-            "category": productData["category"] ? new mongodb.ObjectId(productData["category"]) : null
-        }});
+        let productData = request.productData;
+
+        let saveData = {
+          "name": productData["name"],
+          "description": productData["description"]["text"],
+          "amountInStock": productData["amountInStock"],
+          "price": productData["price"],
+          "category": productData["category"] ? new mongodb.ObjectId(productData["category"]) : null
+        };
+
+        let filter = {"_id": new mongodb.ObjectId(id)};
+        let setOperation = {"$set": saveData};
+
+        console.log(filter, setOperation);
+
+        await collection.updateOne(filter, setOperation);
     }
 
     async save(aCollection, aId, aData) {
