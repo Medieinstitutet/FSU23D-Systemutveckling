@@ -1,0 +1,11 @@
+<?php
+    include_once("../startup.php");
+    include_once("../functions.php");
+?>
+<html>
+    <body>
+        <?php
+            get_greeting("category");
+        ?>
+    </body>
+</html>
