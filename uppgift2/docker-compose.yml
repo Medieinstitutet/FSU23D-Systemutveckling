@@ -1,0 +1,31 @@
+version: '3.1'
+
+services:
+  db:
+    image: mariadb:10.6
+    volumes:
+      - ./db_data:/var/www/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: notSecureChangeMe
+  site:
+    depends_on:
+      - db
+    volumes:
+      - ./html:/var/www/html
+    image: php-local:mvc
+    restart: always
+    ports:
+      - 8082:80
+    environment:
+      PMA_HOST: db
+  phpmyadmin:
+    depends_on:
+      - db
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8083:80
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: notSecureChangeMe
