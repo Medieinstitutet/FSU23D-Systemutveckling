@@ -8,6 +8,12 @@ const App = () => {
 
   let mailgunKey = getEnv("mailgun_key");
 
+  let importantFunction = () => {
+    //..
+    //..
+      //..
+  }
+
   return (
     <div>
       <div>New project</div>
