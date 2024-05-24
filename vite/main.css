@@ -12,6 +12,7 @@ body {
     text-align: center;
     background-color: #FFFFFF;
     display: inline-block;
+    font-size: large;
 }
 
 .progess-bar-tracker.paused:not(i) {
