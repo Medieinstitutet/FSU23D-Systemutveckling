@@ -1,11 +1,15 @@
 import * as React from 'react';
 import ReactDOM from "react-dom/client";
+import Login from "./Login";
 
 
 const App = () => {
 
   return (
-    <div>New project</div>
+    <div>
+      <div>New project</div>
+      <div><Login /></div>
+    </div>
   )
 }
 
