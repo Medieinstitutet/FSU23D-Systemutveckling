@@ -2,6 +2,10 @@
         background-color: #666666;
     }
 
+    .added-class {
+        color: #FF0000;
+    }
+
     .progess-bar {
         background-color: #FF0000;
     }
@@ -18,18 +22,15 @@
         column-gap: 0ch;
     }
 
-    .progess-bar-tracker-text {
-        font-size: large;
-        color: #FFFFFF;
-    }
-
-    .progess-bar-tracker.paused:not(i) {
-        background-color: #F99999;
-    }
-
     .progess-bar-tracker:hover {
         width: 30px;
         height: 30px;
+    }
+
+    
+
+    .progess-bar-tracker.paused {
+        background-color: #F99999;
     }
 
     .progess-bar-tracker.stopped {
@@ -37,6 +38,11 @@
         font-family: 'Courier New', Courier, monospace;
     }
 
-    .added-class {
-        color: #FF0000;
+    .progess-bar-tracker-text {
+        font-size: large;
+        color: #FFFFFF;
     }
+
+    
+
+    
