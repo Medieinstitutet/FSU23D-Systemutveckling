@@ -13,6 +13,10 @@ const App = () => {
     //..
       //..
   }
+  
+  let sendMail = () => {
+    
+  }
 
   return (
     <div>
