@@ -8,6 +8,7 @@
 
     .progess-bar {
         background-color: #FF0000;
+        color: #666666;
     }
 
     .progess-bar-tracker {
@@ -25,6 +26,7 @@
     .progess-bar-tracker:hover {
         width: 30px;
         height: 30px;
+        display: none;
     }
 
     
