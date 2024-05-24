@@ -14,3 +14,8 @@ body {
 .progess-bar-tracker.paused {
     background-color: #F99999;
 }
+
+.progess-bar-tracker:hover {
+    width: 30px;
+    height: 30px;
+}
