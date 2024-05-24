@@ -13,6 +13,7 @@ body {
     background-color: #FFFFFF;
     display: inline-block;
     flex-direction: column;
+    font-weight: 500;
     font-size: large;
     color: #FFFFFF;
 }
