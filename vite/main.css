@@ -11,6 +11,7 @@ body {
     height: 20px;
     text-align: center;
     background-color: #FFFFFF;
+    display: inline-block;
 }
 
 .progess-bar-tracker.paused {
@@ -24,4 +25,5 @@ body {
 
 .progess-bar-tracker.stopped {
     background-color: #666666;
+    font-family: 'Courier New', Courier, monospace;
 }
