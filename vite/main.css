@@ -14,7 +14,7 @@ body {
     display: inline-block;
     flex-direction: column;
     font-weight: 500;
-  font-family: 'Courier New', Courier, monospace;
+    font-family: 'Courier New', Courier, monospace;
 }
 
 .progess-bar-tracker-text {
