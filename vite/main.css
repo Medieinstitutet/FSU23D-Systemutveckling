@@ -13,6 +13,9 @@ body {
     background-color: #FFFFFF;
     display: inline-block;
     flex-direction: column;
+}
+
+.progess-bar-tracker-text {
     font-size: large;
     color: #FFFFFF;
 }
