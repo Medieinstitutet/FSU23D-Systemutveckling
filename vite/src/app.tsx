@@ -5,6 +5,9 @@ import Login from "./Login";
 
 const App = () => {
 
+
+  let mailgunKey = getEnv("mailgun_key");
+
   return (
     <div>
       <div>New project</div>
