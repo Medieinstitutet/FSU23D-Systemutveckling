@@ -15,7 +15,6 @@ body {
     flex-direction: column;
     font-size: large;
     color: #FFFFFF;
-    /* here */
 }
 
 .progess-bar-tracker.paused:not(i) {
