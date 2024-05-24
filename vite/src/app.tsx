@@ -5,6 +5,22 @@ import Login from "./Login";
 
 const App = () => {
 
+
+  let mailgunKey = getEnv("mailgun_key");
+
+<<<<<<< test
+  let importantFunction = () => {
+    //..
+    //..
+      //..
+  }
+  
+=======
+>>>>>>> main
+  let sendMail = () => {
+    
+  }
+
   return (
     <div>
       <div>New project</div>
