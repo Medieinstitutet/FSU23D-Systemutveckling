@@ -1,37 +1,41 @@
-body {
-    background-color: #666666;
-}
+    body {
+        background-color: #666666;
+    }
 
-.progess-bar {
-    background-color: #FF0000;
-}
+    .progess-bar {
+        background-color: #FF0000;
+    }
 
-.progess-bar-tracker {
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    background-color: #FFFFFF;
-    display: inline-block;
-    flex-direction: column;
-    font-weight: 500;
-    font-family: 'Courier New', Courier, monospace;
-}
+    .progess-bar-tracker {
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        background-color: #FFFFFF;
+        display: inline-block;
+        flex-direction: column;
+        font-weight: 500;
+        font-family: 'Courier New', Courier, monospace;
+    }
 
-.progess-bar-tracker-text {
-    font-size: large;
-    color: #FFFFFF;
-}
+    .progess-bar-tracker-text {
+        font-size: large;
+        color: #FFFFFF;
+    }
 
-.progess-bar-tracker.paused:not(i) {
-    background-color: #F99999;
-}
+    .progess-bar-tracker.paused:not(i) {
+        background-color: #F99999;
+    }
 
-.progess-bar-tracker:hover {
-    width: 30px;
-    height: 30px;
-}
+    .progess-bar-tracker:hover {
+        width: 30px;
+        height: 30px;
+    }
 
-.progess-bar-tracker.stopped {
-    background-color: #666666;
-    font-family: 'Courier New', Courier, monospace;
-}
+    .progess-bar-tracker.stopped {
+        background-color: #666666;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+    .added-class {
+        color: #FF0000;
+    }
