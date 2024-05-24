@@ -9,6 +9,7 @@ body {
 .progess-bar-tracker {
     width: 20px;
     height: 20px;
+    background-color: #FFFFFF;
 }
 
 .progess-bar-tracker.paused {
