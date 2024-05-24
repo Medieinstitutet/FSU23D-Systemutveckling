@@ -13,6 +13,7 @@ body {
     background-color: #FFFFFF;
     display: inline-block;
     flex-direction: column;
+    clor: #FFFFFF;
 }
 
 .progess-bar-tracker.paused:not(i) {
