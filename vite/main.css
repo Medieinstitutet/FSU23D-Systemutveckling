@@ -15,6 +15,7 @@ body {
     flex-direction: column;
     font-weight: 500;
     font-family: 'Courier New', Courier, monospace;
+    column-gap: 0ch;
 }
 
 .progess-bar-tracker-text {
