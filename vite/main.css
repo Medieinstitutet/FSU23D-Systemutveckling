@@ -5,3 +5,12 @@ body {
 .progess-bar {
     background-color: #FF0000;
 }
+
+.progess-bar-tracker {
+    width: 20px;
+    height: 20px;
+}
+
+.progess-bar-tracker.paused {
+    background-color: #F99999;
+}
