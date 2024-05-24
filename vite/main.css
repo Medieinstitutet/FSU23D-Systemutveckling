@@ -1,5 +1,5 @@
 body {
-    
+    background-color: #666666;
 }
 
 .progess-bar {
@@ -14,7 +14,7 @@ body {
     display: inline-block;
 }
 
-.progess-bar-tracker.paused {
+.progess-bar-tracker.paused:not(i) {
     background-color: #F99999;
 }
 
